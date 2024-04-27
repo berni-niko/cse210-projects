@@ -2,21 +2,21 @@ using System;
 
 public class Job
 {
-    public string Company { get; set; }
-    public string JobTitle { get; set; }
-    public int StartYear { get; set; }
-    public int EndYear { get; set; }
+    public string _company { get; set; }
+    public string _jobTitle { get; set; }
+    public int _startYear { get; set; }
+    public int _endYear { get; set; }
 
     public Job(string jobTitle, string company, int startYear, int endYear)
     {
-        JobTitle = jobTitle;
-        Company = company;
-        StartYear = startYear;
-        EndYear = endYear;
+        _jobTitle = jobTitle;
+        _company = company;
+        _startYear = startYear;
+        _endYear = endYear;
     }
 
     public void Display()
     {
-        Console.WriteLine($"{JobTitle} ({Company}) {StartYear}-{EndYear}");
+        Console.WriteLine($"{_jobTitle} ({_company}) {_startYear}-{_endYear}");
     }
 }
