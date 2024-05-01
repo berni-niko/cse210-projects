@@ -186,7 +186,7 @@ public class JournalApp
         Console.WriteLine("5. Exit");
         Console.WriteLine("6. Delete an entry");
         Console.WriteLine("7. Sort journal by date");
-        Console.WriteLine("Choose an option:");
+        Console.Write("Choose an option: ");
     }
 
     // Behavior: Method to write a new journal entry
@@ -195,7 +195,7 @@ public class JournalApp
         int index = random.Next(prompts.Count); // Behavior: Randomly select a prompt
         string prompt = prompts[index]; // Behavior: Get the prompt
         Console.WriteLine(prompt); // Behavior: Display the prompt
-        Console.WriteLine("Your response:");
+        Console.Write("Your response: ");
         string response = Console.ReadLine(); // Behavior: Get the response from the user
 
         if (string.IsNullOrEmpty(response)) // Behavior: Check if response is empty
@@ -220,7 +220,7 @@ public class JournalApp
     // Behavior: Method to save journal entries to a file
     private void SaveJournal() 
     {
-        Console.WriteLine("Enter filename to save:");
+        Console.Write("Enter filename to save: ");
         string filename = Console.ReadLine(); // Behavior: Get the filename from user
         if (string.IsNullOrEmpty(filename)) 
         {
