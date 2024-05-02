@@ -1,0 +1,26 @@
+[
+  {
+    "Date": "2024-05-02",
+    "PromptText": "Who was the most interesting person I interacted with today?",
+    "EntryText": "My wife was the most interesting person today",
+    "Mood": "Happy"
+  },
+  {
+    "Date": "2024-05-02",
+    "PromptText": "How did I see the hand of the Lord in my life today?",
+    "EntryText": "He was awesome today",
+    "Mood": "happy"
+  },
+  {
+    "Date": "2024-05-02",
+    "PromptText": "How did I see the hand of the Lord in my life today?",
+    "EntryText": "He was awesome",
+    "Mood": "2"
+  },
+  {
+    "Date": "2024-05-02",
+    "PromptText": "If I had one thing I could do over today, what would it be?",
+    "EntryText": "Jump of a tall building and fly away",
+    "Mood": "happy"
+  }
+]

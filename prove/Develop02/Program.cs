@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Newtonsoft.Json;
 
 // The Program class acts as the entry point for the application.
 class Program
@@ -18,41 +19,55 @@ class Program
             Console.WriteLine("Journal Application");
             Console.WriteLine("1. Write New Entry");
             Console.WriteLine("2. Display Journal");
-            Console.WriteLine("3. Save Journal to File");
-            Console.WriteLine("4. Load Journal from File");
-            Console.WriteLine("5. Exit");
+            Console.WriteLine("3. Save Journal to CSV");
+            Console.WriteLine("4. Load Journal from CSV");
+            Console.WriteLine("5. Save Journal to JSON");
+            Console.WriteLine("6. Load Journal from JSON");
+            Console.WriteLine("7. Exit");
             Console.Write("Select an option: ");
             string option = Console.ReadLine();
 
             // Switch statement to handle user input.
             switch (option)
             {
-                case "1": // Option to write a new journal entry.
+                 case "1":
                     string prompt = promptGenerator.GetRandomPrompt();
                     Console.WriteLine($"Today's Prompt: {prompt}");
                     Console.Write("Your response: ");
                     string response = Console.ReadLine();
+                    Console.Write("Your mood (e.g., Happy, Sad, Neutral): ");
+                    string mood = Console.ReadLine();
                     string date = DateTime.Now.ToString("yyyy-MM-dd");
-                    Entry entry = new Entry(date, prompt, response);
+                    Entry entry = new Entry(date, prompt, response, mood);
                     journal.AddEntry(entry);
                     break;
-                case "2": // Option to display all journal entries.
+                case "2":
                     journal.DisplayAll();
                     break;
-                case "3": // Option to save the journal to a file.
-                    Console.Write("Enter filename to save: ");
-                    string saveFile = Console.ReadLine();
-                    journal.SaveToFile(saveFile);
+                case "3":
+                    Console.Write("Enter filename to save as CSV: ");
+                    string csvFile = Console.ReadLine();
+                    journal.SaveToCSV(csvFile);
                     break;
-                case "4": // Option to load the journal from a file.
-                    Console.Write("Enter filename to load: ");
-                    string loadFile = Console.ReadLine();
-                    journal.LoadFromFile(loadFile);
+                case "4":
+                    Console.Write("Enter filename to load from CSV: ");
+                    string loadCsvFile = Console.ReadLine();
+                    journal.LoadFromCSV(loadCsvFile);
                     break;
-                case "5": // Option to exit the program.
+                case "5":
+                    Console.Write("Enter filename to save as JSON: ");
+                    string jsonFile = Console.ReadLine();
+                    journal.SaveToJson(jsonFile);
+                    break;
+                case "6":
+                    Console.Write("Enter filename to load from JSON: ");
+                    string loadJsonFile = Console.ReadLine();
+                    journal.LoadFromJson(loadJsonFile);
+                    break;
+                case "7":
                     running = false;
                     break;
-                default: // Handler for invalid input.
+                default:
                     Console.WriteLine("Invalid option, please try again.");
                     break;
             }
@@ -87,33 +102,52 @@ public class Journal
     }
 
     // Method to save the journal to a file.
-    public void SaveToFile(string file)
+    public void SaveToCSV(string file)
     {
         using (StreamWriter writer = new StreamWriter(file))
         {
+            writer.WriteLine("Date,Prompt,Mood,Entry");
             foreach (Entry entry in _entries)
             {
-                writer.WriteLine($"{entry.Date}|{entry.PromptText}|{entry.EntryText}");
+                // Escape quotes and commas
+                string escapedEntry = entry.EntryText.Replace("\"", "\"\"");
+                writer.WriteLine($"\"{entry.Date}\",\"{entry.PromptText}\",\"{entry.Mood}\",\"{escapedEntry}\"");
             }
         }
     }
 
     // Method to load the journal from a file.
-    public void LoadFromFile(string file)
+    public void LoadFromCSV(string file)
     {
         _entries.Clear();
         using (StreamReader reader = new StreamReader(file))
         {
+            reader.ReadLine(); // Skip header
             string line;
             while ((line = reader.ReadLine()) != null)
             {
-                string[] parts = line.Split('|');
-                if (parts.Length == 3)
+                string[] parts = line.Split(new char[] { ',' }, 4);
+                if (parts.Length == 4)
                 {
-                    AddEntry(new Entry(parts[0], parts[1], parts[2]));
+                    // Unescape quotes
+                    string entryText = parts[3].Trim('"').Replace("\"\"", "\"");
+                    AddEntry(new Entry(parts[0].Trim('"'), parts[1].Trim('"'), entryText, parts[2].Trim('"')));
                 }
             }
         }
+    }
+        // Save journal entries to a JSON file
+    public void SaveToJson(string file)
+    {
+        string json = JsonConvert.SerializeObject(_entries, Formatting.Indented);
+        File.WriteAllText(file, json);
+    }
+
+    // Load journal entries from a JSON file
+    public void LoadFromJson(string file)
+    {
+        string json = File.ReadAllText(file);
+        _entries = JsonConvert.DeserializeObject<List<Entry>>(json) ?? new List<Entry>();
     }
 }
 
@@ -123,13 +157,15 @@ public class Entry
     public string Date { get; set; } // Public property for the date of the entry.
     public string PromptText { get; set; } // Public property for the prompt text of the entry.
     public string EntryText { get; set; } // Public property for the text of the entry.
+    public string Mood { get; set; } // Public property to track the mood
 
     // Constructor to create a new entry with specified date, prompt, and text.
-    public Entry(string date, string prompt, string text)
+    public Entry(string date, string prompt, string text, string mood)
     {
         Date = date;
         PromptText = prompt;
         EntryText = text;
+        Mood = mood;
     }
 
     // Method to display the entry in a formatted way.
@@ -137,6 +173,7 @@ public class Entry
     {
         Console.WriteLine($"Date: {Date}");
         Console.WriteLine($"Prompt: {PromptText}");
+        Console.WriteLine($"Mood: {Mood}");
         Console.WriteLine($"Entry: {EntryText}");
         Console.WriteLine("------------------------------");
     }
