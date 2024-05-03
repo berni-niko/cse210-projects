@@ -27,7 +27,7 @@ class Program
             Console.Write("Select an option: ");
             string option = Console.ReadLine();
 
-            // Switch statement to handle user input.
+            // Switch statement to handle user input. https://www.youtube.com/watch?v=Qs-LAYkp9YU&t=7s Starts from 6:57min
             switch (option)
             {
                  case "1":
