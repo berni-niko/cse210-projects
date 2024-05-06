@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 
+//Attempted the stretch challenge
+
+
 // The Program class acts as the entry point for the application.
 class Program
 {
