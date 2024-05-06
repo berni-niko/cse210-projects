@@ -11,7 +11,7 @@ class Program
         Console.WriteLine(f1.GetFractionString()); // Output: 1/1
         Console.WriteLine(f1.GetDecimalValue());   // Output: 1.0
 
-        // Test 2: 6/1
+        // Test 2: 5/1
         Fraction f2 = new Fraction(5);
         Console.WriteLine(f2.GetFractionString()); // Output: 5/1
         Console.WriteLine(f2.GetDecimalValue());   // Output: 5.0
