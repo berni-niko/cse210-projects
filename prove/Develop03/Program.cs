@@ -1,5 +1,7 @@
-using System; // Importing the System namespace for basic functionalities
-using System.Collections.Generic; // Importing the System.Collections.Generic namespace for using List<T>
+//Completed stretch challenge: "Have your program work with a library of scriptures rather than a single one. Choose scriptures at random to present to the user.
+
+using System; 
+using System.Collections.Generic; 
 
 class Program
 {
