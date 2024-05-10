@@ -1,130 +1,47 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
-public class Program
+class Program
 {
-    public static void Main()
+    static void Main(string[] args)
     {
-        var reference = new Reference("Proverbs", 3, 5, 6);
-        var scriptureText = "Trust in the Lord with all thine heart; and lean not unto thine own understanding.";
-        var scripture = new Scripture(reference, scriptureText);
-        var memorizer = new ScriptureMemorizer(scripture);
-        memorizer.Run();
-    }
-}
+        // Initialize a library of scriptures
+        ScriptureLibrary scriptureLibrary = new ScriptureLibrary();
+        scriptureLibrary.AddScripture(new Scripture(new Reference("John", 3, 16), "For God so loved the world that He gave His only begotten Son, that whoever believes in Him should not perish but have everlasting life."));
+        scriptureLibrary.AddScripture(new Scripture(new Reference("Psalm", 23, 1), "The Lord is my shepherd; I shall not want."));
+        scriptureLibrary.AddScripture(new Scripture(new Reference("Matthew", 5, 9), "Blessed are the peacemakers: for they shall be called the children of God."));
 
-public class Reference
-{
-    public string Book { get; private set; }
-    public int Chapter { get; private set; }
-    public int VerseStart { get; private set; }
-    public int? VerseEnd { get; private set; }
+        Console.WriteLine("Press Enter to hide words or type 'quit' to exit.");
+        Scripture scripture = scriptureLibrary.GetRandomScripture();
 
-    public Reference(string book, int chapter, int verseStart, int verseEnd = 0)
-    {
-        Book = book;
-        Chapter = chapter;
-        VerseStart = verseStart;
-        VerseEnd = verseEnd == 0 ? (int?)null : verseEnd;
-    }
-
-    public string GetDisplayText()
-    {
-        if (VerseEnd.HasValue)
-            return $"{Book} {Chapter}:{VerseStart}-{VerseEnd}";
-        else
-            return $"{Book} {Chapter}:{VerseStart}";
-    }
-}
-
-public class Word
-{
-    public string Text { get; private set; }
-    private bool _hidden;
-
-    public Word(string text)
-    {
-        Text = text;
-        _hidden = false;
-    }
-
-    public void Hide()
-    {
-        _hidden = true;
-    }
-
-    public bool IsHidden()
-    {
-        return _hidden;
-    }
-
-    public string GetDisplayText()
-    {
-        return _hidden ? "_____" : Text;
-    }
-}
-
-public class Scripture
-{
-    public Reference Reference { get; private set; }
-    public List<Word> Words { get; private set; }
-
-    public Scripture(Reference reference, string text)
-    {
-        Reference = reference;
-        Words = text.Split(' ').Select(word => new Word(word)).ToList();
-    }
-
-    public string GetDisplayText()
-    {
-        var wordsText = string.Join(" ", Words.Select(word => word.GetDisplayText()));
-        return $"{Reference.GetDisplayText()}\n{wordsText}";
-    }
-
-    public void HideRandomWords(int count = 3)
-    {
-        var random = new Random();
-        var visibleWords = Words.Where(word => !word.IsHidden()).ToList();
-
-        for (int i = 0; i < count; i++)
-        {
-            if (visibleWords.Any())
-            {
-                var randomWord = visibleWords[random.Next(visibleWords.Count)];
-                randomWord.Hide();
-                visibleWords.Remove(randomWord);
-            }
-        }
-    }
-}
-
-public class ScriptureMemorizer
-{
-    public Scripture Scripture { get; private set; }
-
-    public ScriptureMemorizer(Scripture scripture)
-    {
-        Scripture = scripture;
-    }
-
-    public void Run()
-    {
-        while (true)
+        while (!scripture.IsCompletelyHidden())
         {
             Console.Clear();
-            Console.WriteLine(Scripture.GetDisplayText());
-
-            Console.WriteLine("\nPress Enter to continue or type 'quit' to exit:");
-            var input = Console.ReadLine().ToLower();
-            if (input == "quit")
+            Console.WriteLine(scripture.GetDisplayText());
+            string input = Console.ReadLine();
+            if (input.ToLower() == "quit")
                 break;
-
-            Scripture.HideRandomWords();
-            if (Scripture.Words.All(word => word.IsHidden()))
-                break;
+            scripture.HideRandomWords(3);
         }
 
-        Console.WriteLine("All words are hidden. Memorization session is over.");
+        Console.WriteLine("All words are hidden!");
     }
 }
+
+public class ScriptureLibrary
+{
+    private List<Scripture> _scriptures = new List<Scripture>();
+    private Random _random = new Random();
+
+    public void AddScripture(Scripture scripture)
+    {
+        _scriptures.Add(scripture);
+    }
+
+    public Scripture GetRandomScripture()
+    {
+        int index = _random.Next(_scriptures.Count);
+        return _scriptures[index];
+    }
+}
+
