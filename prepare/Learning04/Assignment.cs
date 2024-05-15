@@ -1,24 +1,22 @@
-namespace AssignmentApp.Assignment
+public class Assignment
 {
-    public class Assignment
+    private string _studentName;
+    private string _topic;
+
+    public Assignment(string studentName, string topic)
     {
-        private string _studentName;
-        private string _topic;
+        _studentName = studentName;
+        _topic = topic;
+    }
 
-        public Assignment(string studentName, string topic)
-        {
-            _studentName = studentName;
-            _topic = topic;
-        }
+    public string GetSummary()
+    {
+        return $"{_studentName} - {_topic}";
+    }
 
-        public string GetSummary()
-        {
-            return $"{_studentName} - {_topic}";
-        }
-
-        public string GetStudentName()
-        {
-            return _studentName;
-        }
+    public string GetStudentName()
+    {
+        return _studentName;
     }
 }
+
