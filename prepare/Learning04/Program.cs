@@ -14,3 +14,4 @@ class Program
         Console.WriteLine(writingAssignment.GetWritingInformation());
     }
 }
+
