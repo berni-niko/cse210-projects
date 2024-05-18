@@ -32,17 +32,17 @@ public class ReflectingActivity : Activity
     public override void Run()
     {
         DisplayStartingMessage();
-
-        
-        Console.WriteLine("When you have something in mind, press enter to continue.");
-        Console.ReadLine();
-        
+      
         string prompt = GetRandomPrompt();
         Console.WriteLine(prompt);
         ShowSpinner(5);
         Console.WriteLine("Press enter once you've thought about the question.");
         Console.ReadLine();
-        for (int i = 0; i < _duration / 3; i++)
+        
+        DateTime endTime = DateTime.Now.AddSeconds(_duration);
+        int questionIndex = 0;
+
+        while (DateTime.Now < endTime && questionIndex < _questions.Count)
         {
             string question = GetRandomQuestion();
             Console.WriteLine(question);
