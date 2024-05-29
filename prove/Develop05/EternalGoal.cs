@@ -26,6 +26,6 @@ public class EternalGoal : Goal
     // Override method to get the string representation of the eternal goal
     public override string GetStringRepresentation()
     {
-        return $"{ShortName}: {Description} - {Points} points (Recorded {_recordCount} times)";
+        return $"[ ] {ShortName}: {Description} - {Points} points (Recorded {_recordCount} times)";
     }
 }

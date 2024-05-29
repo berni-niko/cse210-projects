@@ -43,6 +43,6 @@ public class ChecklistGoal : Goal
     // Override method to get the string representation of the checklist goal
     public override string GetStringRepresentation()
     {
-        return $"{ShortName}: {Description} - {Points} points (Completed {AmountCompleted}/{Target} times)";
+        return $"[{(IsComplete() ? 'x' : ' ')}] {ShortName}: {Description} - {Points} points (Completed {AmountCompleted}/{Target} times)";
     }
 }

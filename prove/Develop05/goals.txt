@@ -1,5 +1,5 @@
-400
+700
 SimpleGoal|Walking|Walk 10 Km each day|100|True
-ChecklistGoal|Pizza|Eat 3 pizza's a day|50|3|250|2
+ChecklistGoal|Pizza|Eat 3 pizza's a day|50|3|250|3
 EternalGoal|Temple|Attend the temple each week|200
 EternalGoal|Scripture|Read my scriptures daily|200

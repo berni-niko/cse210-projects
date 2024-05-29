@@ -26,6 +26,6 @@ public class SimpleGoal : Goal
     // Override method to get the string representation of the simple goal
     public override string GetStringRepresentation()
     {
-        return $"{ShortName}: {Description} - {Points} points (Complete: {_isComplete})";
+        return $"[{(_isComplete ? 'x' : ' ')}] {ShortName}: {Description} - {Points} points";
     }
 }
