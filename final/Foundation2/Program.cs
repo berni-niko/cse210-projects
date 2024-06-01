@@ -27,7 +27,7 @@ class Program
         Order order1 = new Order(order1Products, customer1);
         Order order2 = new Order(order2Products, customer2);
 
-                // Display results for Order 1
+        // Display results for Order 1
         DisplayOrderDetails(order1, "Order1");
 
         // Display results for Order 2
@@ -35,7 +35,7 @@ class Program
 
     }
 
-           static void DisplayOrderDetails(Order order, string orderName)
+    static void DisplayOrderDetails(Order order, string orderName)
     {
         // Print Total Cost
         Console.WriteLine($"{orderName} Total Cost: {order.CalculateTotalCost():C}");
