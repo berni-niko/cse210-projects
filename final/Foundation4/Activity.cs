@@ -16,7 +16,7 @@ public abstract class Activity
     public DateTime Date => _date;
     public int DurationInMinutes => _durationInMinutes;
 
-    // Abstract methods to be implemented by derived classes
+    // Abstract methods to be implemented by children classes
     public abstract double GetDistance();
     public abstract double GetSpeed();
     public abstract double GetPace();

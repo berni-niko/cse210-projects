@@ -5,7 +5,7 @@ public class Program
 {
     public static void Main()
     {
-        // List to hold different activities
+        // List to for various activities
         List<Activity> activities = new List<Activity>
         {
             new Running(new DateTime(2022, 11, 3), 30, 3.0),
